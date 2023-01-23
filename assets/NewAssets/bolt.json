@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "bolt.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 49,
+				"h": 104
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "bolt1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 2,
+						"w": 47,
+						"h": 26
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 47,
+						"h": 26
+					}
+				},
+				{
+					"filename": "bolt2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 1,
+						"w": 46,
+						"h": 28
+					},
+					"frame": {
+						"x": 1,
+						"y": 29,
+						"w": 46,
+						"h": 28
+					}
+				},
+				{
+					"filename": "bolt3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 2,
+						"w": 46,
+						"h": 23
+					},
+					"frame": {
+						"x": 1,
+						"y": 59,
+						"w": 46,
+						"h": 23
+					}
+				},
+				{
+					"filename": "bolt4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 6,
+						"w": 46,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 84,
+						"w": 46,
+						"h": 19
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:c01a79cd2a0d01e78c2e8bc81785a99a:b1f769bc30c473110d8567e489d2c7b2:786b18d6ac2995fbc971063b92f61e24$"
+	}
+}
