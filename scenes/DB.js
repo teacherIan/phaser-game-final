@@ -120,7 +120,7 @@ export default class DB extends Phaser.Scene {
       // this.addData();
     }
 
-    for (let i = 0; i < filteredData.length; i++) {
+    for (let i = 0; i < 10; i++) {
       let highScoreName = filteredData[i].name;
       let highScoreAmount = filteredData[i].score;
       let highScoreID = filteredData[i].id;
