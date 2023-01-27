@@ -184,6 +184,12 @@ export default class LoadingScene extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.backgroundMusic = this.sound.add('backgroundMusic', {
+      loop: true,
+    });
+
+    this.backgroundMusic.play();
+
     //Start game after loading assets
     this.scene.start('menu');
   }

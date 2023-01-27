@@ -37,12 +37,6 @@ export default class SceneTwo extends Phaser.Scene {
      * Play Music
      */
 
-    this.backgroundMusic = this.sound.add('backgroundMusic', {
-      loop: true,
-    });
-
-    this.backgroundMusic.play();
-
     /**
      * Add Background
      */

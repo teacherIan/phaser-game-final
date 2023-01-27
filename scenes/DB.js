@@ -72,7 +72,7 @@ export default class DB extends Phaser.Scene {
     });
 
     this.back.on('pointerdown', () => {
-      this.scene.start('menu');
+      location.reload();
     });
   }
 
@@ -133,7 +133,7 @@ export default class DB extends Phaser.Scene {
         50
       );
 
-      let ageText = this.add.bitmapText(
+      let scoreText = this.add.bitmapText(
         window.innerWidth - window.innerWidth / 3,
         window.innerHeight / 3 + 60 * i,
         'arcadeFont',
@@ -142,7 +142,8 @@ export default class DB extends Phaser.Scene {
       );
 
       if (highScoreID == this.currentID) {
-        nameText.setTint(0xfffec8);
+        nameText.setTint(0xc11c22);
+        scoreText.setTint(0xc11c22);
       }
     }
   }
