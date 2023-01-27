@@ -367,12 +367,14 @@ export default class SceneTwo extends Phaser.Scene {
     let tween = this.tweens.add({
       targets: this.player,
       y: window.innerHeight - 100,
-      duration: 1000,
+      duration: 500,
       ease: 'power1',
       repeat: 0,
       onComplete: function () {
-        this.player.alpha = 1;
-        this.settings.currentDirection = '';
+        setTimeout(() => {
+          this.player.alpha = 1;
+          this.settings.currentDirection = '';
+        }, 2000);
       },
       callbackScope: this,
     });

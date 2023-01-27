@@ -126,6 +126,7 @@ export default class NewHighScore extends Phaser.Scene {
   }
 
   async addData() {
+    this.submit.destroy();
     try {
       const docRef = await addDoc(collection(firebaseDB, 'high_scores'), {
         name: this.userInput.text,
