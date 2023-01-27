@@ -132,7 +132,7 @@ export default class NewHighScore extends Phaser.Scene {
         name: this.userInput.text,
         highScore: this.newScore,
       });
-      this.scene.start('highScores');
+      this.scene.start('highScores', { id: docRef.id });
     } catch (e) {
       console.error('Error adding document: ', e);
     }

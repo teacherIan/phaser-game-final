@@ -6,25 +6,15 @@ export default class DB extends Phaser.Scene {
   }
 
   init(data) {
-    this.newScore = data.score;
+    // this.newScore = data.score;
+    this.currentID = data.id;
   }
 
   preload() {
     this.dataAdded = false;
-
-    // this.load.image('knighthawks', '../assets/font/knight3.png');
-    // this.load.bitmapFont(
-    //   'arcadeFont',
-    //   '../assets/font/arcade.png',
-    //   '../assets/font/arcade.xml'
-    // );
-
-    //test data
   }
 
   create() {
-    // this.addData();
-
     this.getData('high_scores');
 
     this.databaseData = [];
@@ -94,7 +84,11 @@ export default class DB extends Phaser.Scene {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
 
-      this.databaseData.push({ name: data.name, score: data.highScore });
+      this.databaseData.push({
+        name: data.name,
+        score: data.highScore,
+        id: doc.id,
+      });
     });
 
     this.updatesScores();
@@ -129,6 +123,7 @@ export default class DB extends Phaser.Scene {
     for (let i = 0; i < filteredData.length; i++) {
       let highScoreName = filteredData[i].name;
       let highScoreAmount = filteredData[i].score;
+      let highScoreID = filteredData[i].id;
 
       let nameText = this.add.bitmapText(
         window.innerWidth / 6,
@@ -145,6 +140,10 @@ export default class DB extends Phaser.Scene {
         highScoreAmount.toString().padStart(8, '0'),
         50
       );
+
+      if (highScoreID == this.currentID) {
+        nameText.setTint(0xfffec8);
+      }
     }
   }
 }
