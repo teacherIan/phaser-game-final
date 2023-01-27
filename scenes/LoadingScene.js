@@ -1,3 +1,20 @@
+import backgroundImageOne from '../assets/Desert/backgrounds/desert-backgorund.png';
+import backgroundImageTwo from '../assets/River/PNG/background.png';
+import playerImage from '../assets/spritesheets/ship.png';
+import smallShipImage from '../assets/spritesheets/enemy-small.png';
+import mediumShipImage from '../assets/spritesheets/enemy-medium.png';
+import largeShipImage from '../assets/spritesheets/enemy-big.png';
+import beamImage from '../assets/spritesheets/laser-bolts.png';
+import powerUpImage from '../assets/spritesheets/power-up.png';
+import explosionImage from '../assets/spritesheets/explosion.png';
+import fontPNG from '../assets/font/font.png';
+import fontXML from '../assets/font/font.xml';
+import newBolt from '../assets/NewAssets/boltFixed.png';
+import music from '../assets/Music/warped-shooting-fx.ogg';
+import arcadeFontPNG from '../assets/font/arcade.png';
+import arcadeFontXML from '../assets/font/arcade.xml';
+import knightHawksFont from '../assets/font/knight3.png';
+
 export default class LoadingScene extends Phaser.Scene {
   constructor() {
     //Scene reference name
@@ -8,36 +25,25 @@ export default class LoadingScene extends Phaser.Scene {
     let pickBackground = Math.random();
 
     if (pickBackground > 0.5) {
-      this.load.image(
-        'background',
-        '../assets/Desert/backgrounds/desert-backgorund.png'
-      );
+      this.load.image('background', backgroundImageOne);
     } else {
-      this.load.image('background', '../assets/River/PNG/background.png');
+      this.load.image('background', backgroundImageTwo);
     }
 
-    this.load.spritesheet('player', '../assets/spritesheets/ship.png', {
+    this.load.spritesheet('player', playerImage, {
       frameWidth: 16,
       frameHeight: 24,
     });
 
-    this.load.spritesheet(
-      'shipSmall',
-      '../assets/spritesheets/enemy-small.png',
-      {
-        frameWidth: 16,
-        frameHeight: 16,
-      }
-    );
-    this.load.spritesheet(
-      'shipMedium',
-      '../assets/spritesheets/enemy-medium.png',
-      {
-        frameWidth: 32,
-        frameHeight: 16,
-      }
-    );
-    this.load.spritesheet('shipLarge', '../assets/spritesheets/enemy-big.png', {
+    this.load.spritesheet('shipSmall', smallShipImage, {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet('shipMedium', mediumShipImage, {
+      frameWidth: 32,
+      frameHeight: 16,
+    });
+    this.load.spritesheet('shipLarge', largeShipImage, {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -46,7 +52,7 @@ export default class LoadingScene extends Phaser.Scene {
      * Beam
      */
 
-    this.load.spritesheet('beam', '../assets/spritesheets/laser-bolts.png', {
+    this.load.spritesheet('beam', beamImage, {
       frameWidth: 16,
       frameHeight: 16,
     });
@@ -55,12 +61,12 @@ export default class LoadingScene extends Phaser.Scene {
      * PowerUps
      */
 
-    this.load.spritesheet('powerUps', '../assets/spritesheets/power-up.png', {
+    this.load.spritesheet('powerUps', powerUpImage, {
       frameWidth: 16,
       frameHeight: 16,
     });
 
-    this.load.spritesheet('explosion', '../assets/spritesheets/explosion.png', {
+    this.load.spritesheet('explosion', explosionImage, {
       frameWidth: 16,
       frameHeight: 16,
     });
@@ -69,25 +75,22 @@ export default class LoadingScene extends Phaser.Scene {
      * Fonts
      */
 
-    this.load.bitmapFont(
-      'font',
-      '../assets/font/font.png',
-      '../assets/font/font.xml'
-    );
+    this.load.bitmapFont('font', fontPNG, fontXML);
+
+    this.load.bitmapFont('arcadeFont', arcadeFontPNG, arcadeFontXML);
+
+    this.load.image('knighthawks', knightHawksFont);
 
     /**
      * Try out new Files
      */
 
-    this.load.spritesheet('newBolt', '../assets/NewAssets/boltFixed.png', {
+    this.load.spritesheet('newBolt', newBolt, {
       frameWidth: 48,
       frameHeight: 32,
     });
 
-    this.load.audio(
-      'backgroundMusic',
-      '../assets/Music/warped-shooting-fx.ogg'
-    );
+    this.load.audio('backgroundMusic', music);
   }
 
   create() {
@@ -182,6 +185,6 @@ export default class LoadingScene extends Phaser.Scene {
     });
 
     //Start game after loading assets
-    this.scene.start('playGame');
+    this.scene.start('menu');
   }
 }

@@ -17,9 +17,9 @@ export default class SceneTwo extends Phaser.Scene {
      */
 
     this.settings = {
-      smallEnemy: 3,
-      mediumEnemy: 3,
-      largeEnemy: 3,
+      smallEnemy: 1,
+      mediumEnemy: 1,
+      largeEnemy: 1,
       playerSpeed: 200,
       currentDirection: 'forward',
       score: 0,
@@ -28,12 +28,10 @@ export default class SceneTwo extends Phaser.Scene {
       bulletsInTimeout: 0,
       weaponsPowerUp: false,
       playerBeamSpeed: -350,
+      playerSpeed: 250,
+      lives: 3,
+      totalEnemies: 0,
     };
-
-    this.totalEnemies =
-      this.settings.smallEnemy +
-      this.settings.mediumEnemy +
-      this.settings.largeEnemy;
 
     /**
      * Play Music
@@ -83,48 +81,7 @@ export default class SceneTwo extends Phaser.Scene {
      */
 
     this.enemyGroup = this.physics.add.group();
-
-    for (let i = 0; i < this.settings.smallEnemy; i++) {
-      let smallEnemy = this.add
-        .sprite(Math.random() * window.innerWidth, -50, 'shipSmall')
-        .setScale(3)
-        .play('enemySmallAnimation')
-        .setName('shipSmall')
-        .setData('lives', 3);
-
-      this.enemyGroup.add(smallEnemy);
-    }
-
-    for (let i = 0; i < this.settings.mediumEnemy; i++) {
-      let mediumEnemy = this.add
-        .sprite(Math.random() * window.innerWidth, -50, 'shipMedium')
-        .setScale(3)
-        .play('enemyMediumAnimation')
-        .setName('shipMedium')
-        .setData('lives', 3);
-
-      this.enemyGroup.add(mediumEnemy);
-    }
-
-    for (let i = 0; i < this.settings.largeEnemy; i++) {
-      let largeEnemy = this.add
-        .sprite(Math.random() * window.innerWidth, -50, 'shipLarge')
-        .setScale(3)
-        .play('enemyLargeAnimation')
-        .setName('shipLarge')
-        .setData('lives', 3);
-
-      this.enemyGroup.add(largeEnemy);
-    }
-
-    /**
-     * Set EnemyShip Speed
-     */
-
-    for (let i = 0; i < this.enemyGroup.getChildren().length; i++) {
-      let enemySpeed = Math.random() * 60 + 40;
-      this.enemyGroup.getChildren()[i].body.setVelocityY(enemySpeed);
-    }
+    this.addEnemies();
 
     /**
      * Deal with player taking damage
@@ -303,7 +260,7 @@ export default class SceneTwo extends Phaser.Scene {
       this.keyboardControls.down.isDown &&
       this.settings.currentDirection != 'down'
     ) {
-      this.player.setVelocityY(200);
+      this.player.setVelocityY(this.settings.playerSpeed);
       this.player.setVelocityX(0);
       this.player.play('player_forward');
       this.settings.currentDirection = 'down';
@@ -312,7 +269,7 @@ export default class SceneTwo extends Phaser.Scene {
       this.keyboardControls.up.isDown &&
       this.settings.currentDirection != 'up'
     ) {
-      this.player.setVelocityY(-200);
+      this.player.setVelocityY(-this.settings.playerSpeed);
       this.player.setVelocityX(0);
       this.player.play('player_forward');
       this.settings.currentDirection = 'up';
@@ -322,7 +279,7 @@ export default class SceneTwo extends Phaser.Scene {
       this.settings.currentDirection != 'left'
     ) {
       this.settings.currentDirection = 'left';
-      this.player.setVelocityX(-200);
+      this.player.setVelocityX(-this.settings.playerSpeed);
       this.player.setVelocityY(0);
       this.player.play('player_left');
     }
@@ -330,7 +287,7 @@ export default class SceneTwo extends Phaser.Scene {
       this.keyboardControls.right.isDown &&
       this.settings.currentDirection != 'right'
     ) {
-      this.player.setVelocityX(200);
+      this.player.setVelocityX(this.settings.playerSpeed);
       this.player.setVelocityY(0);
       this.settings.currentDirection = 'right';
       this.player.play('player_right');
@@ -343,7 +300,7 @@ export default class SceneTwo extends Phaser.Scene {
   }
 
   enemyFire(ship) {
-    let randomNumber = Math.floor(Math.random() * 100);
+    let randomNumber = Math.floor(Math.random() * 200);
     if (randomNumber == 20) {
       let beam = new EnemyBeam(this, ship.x, ship.y);
     }
@@ -354,25 +311,47 @@ export default class SceneTwo extends Phaser.Scene {
    */
 
   playerDamaged() {
-    this.settings.bullets = 10;
-    this.settings.currentDirection = '';
-    if (this.player.alpha < 1) {
-      return;
-    }
+    if (this.player.alpha == 1) {
+      console.log(this.settings.lives);
+      this.settings.lives -= 1;
 
-    this.player.alpha = 0.5;
-    let explosion = new Explosion(this, this.player.x, this.player.y);
-    explosion.setScale(5);
-    explosion.on('animationcomplete', () => {
-      explosion.destroy();
-    });
-    this.player.disableBody(true, true);
-    this.time.addEvent({
-      delay: 1000,
-      callback: this.resetPlayer,
-      callbackScope: this,
-      loop: false,
-    });
+      if (this.settings.lives == 0) {
+        let explosion = new Explosion(this, this.player.x, this.player.y);
+        explosion.on('animationcomplete', () => {
+          explosion.destroy();
+        });
+
+        explosion.setScale(4);
+        this.player.setAlpha(0);
+
+        this.time.addEvent({
+          delay: 2000,
+          callback: this.gameOver,
+          callbackScope: this,
+          loop: false,
+        });
+      }
+
+      this.settings.bullets = 10;
+      this.settings.currentDirection = '';
+      if (this.player.alpha < 1) {
+        return;
+      }
+
+      this.player.alpha = 0.5;
+      let explosion = new Explosion(this, this.player.x, this.player.y);
+      explosion.setScale(5);
+      explosion.on('animationcomplete', () => {
+        explosion.destroy();
+      });
+      this.player.disableBody(true, true);
+      this.time.addEvent({
+        delay: 1000,
+        callback: this.resetPlayer,
+        callbackScope: this,
+        loop: false,
+      });
+    }
   }
 
   resetPlayer() {
@@ -401,14 +380,16 @@ export default class SceneTwo extends Phaser.Scene {
 
   gameOver() {
     console.log('Game over');
-    this.scene.start('sceneThree', { score: this.settings.score });
+    this.scene.start('newHighScore', { score: this.settings.score });
   }
 
   enemyHit(projectile, enemy) {
-    this.totalEnemies -= 1;
+    console.log(this.settings.totalEnemies);
+    this.settings.totalEnemies -= 1;
 
-    if (this.totalEnemies == 0) {
-      console.log('Level completed');
+    if (this.settings.totalEnemies == 0) {
+      console.log('next Level');
+      this.addEnemies();
     }
 
     let explosion = new Explosion(this, enemy.x, enemy.y);
@@ -434,7 +415,7 @@ export default class SceneTwo extends Phaser.Scene {
   }
 
   enemyDiagonalFire(ship) {
-    let random = Math.floor(Math.random() * 100);
+    let random = Math.floor(Math.random() * 300);
     if (random == 50) {
       let beam = new EnemyBeamDiagonal(this, ship.x, ship.y);
       let beamRight = new EnemyBeamDiagonal(this, ship.x, ship.y);
@@ -447,13 +428,19 @@ export default class SceneTwo extends Phaser.Scene {
     projectile.destroy();
 
     this.settings.weaponsPowerUp = true;
-    setInterval(() => {
-      this.settings.weaponsPowerUp = false;
-    }, 10000);
+    this.time.addEvent({
+      delay: 10000,
+      callback: () => (this.settings.weaponsPowerUp = false),
+      callbackScope: this,
+      loop: false,
+    });
 
-    setTimeout(() => {
-      this.addGunPowerUp();
-    }, 20000);
+    this.time.addEvent({
+      delay: 20000,
+      callback: this.addGunPowerUp,
+      callbackScope: this,
+      loop: false,
+    });
   }
 
   addGunPowerUp() {
@@ -470,5 +457,59 @@ export default class SceneTwo extends Phaser.Scene {
     powerUpGuns.body.setVelocityY(100);
     powerUpGuns.setScale(3);
     powerUpGuns.play('powerUpGuns');
+  }
+
+  addEnemies() {
+    for (let i = 0; i < this.settings.smallEnemy; i++) {
+      let smallEnemy = this.add
+        .sprite(Math.random() * window.innerWidth, -50, 'shipSmall')
+        .setScale(3)
+        .play('enemySmallAnimation')
+        .setName('shipSmall')
+        .setData('lives', 3);
+
+      this.enemyGroup.add(smallEnemy);
+    }
+
+    for (let i = 0; i < this.settings.mediumEnemy; i++) {
+      let mediumEnemy = this.add
+        .sprite(Math.random() * window.innerWidth, -50, 'shipMedium')
+        .setScale(3)
+        .play('enemyMediumAnimation')
+        .setName('shipMedium')
+        .setData('lives', 3);
+
+      this.enemyGroup.add(mediumEnemy);
+    }
+
+    for (let i = 0; i < this.settings.largeEnemy; i++) {
+      let largeEnemy = this.add
+        .sprite(Math.random() * window.innerWidth, -50, 'shipLarge')
+        .setScale(3)
+        .play('enemyLargeAnimation')
+        .setName('shipLarge')
+        .setData('lives', 3);
+
+      this.enemyGroup.add(largeEnemy);
+    }
+
+    this.settings.totalEnemies =
+      this.settings.smallEnemy * 4 +
+      this.settings.mediumEnemy * 4 +
+      this.settings.largeEnemy * 4;
+
+    //prepare settings for next level
+    this.settings.smallEnemy += 1;
+    this.settings.mediumEnemy += 1;
+    this.settings.largeEnemy += 1;
+
+    /**
+     * Set EnemyShip Speed
+     */
+
+    for (let i = 0; i < this.enemyGroup.getChildren().length; i++) {
+      let enemySpeed = Math.random() * 60 + 60;
+      this.enemyGroup.getChildren()[i].body.setVelocityY(enemySpeed);
+    }
   }
 }
