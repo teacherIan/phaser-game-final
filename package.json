@@ -12,6 +12,7 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
+    "firebase": "^9.16.0",
     "phaser": "^3.55.2"
   }
 }
