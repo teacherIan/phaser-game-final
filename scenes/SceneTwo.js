@@ -41,7 +41,7 @@ export default class SceneTwo extends Phaser.Scene {
       loop: true,
     });
 
-    // this.backgroundMusic.play();
+    this.backgroundMusic.play();
 
     /**
      * Add Background
