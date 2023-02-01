@@ -33,6 +33,43 @@ export default class NewHighScore extends Phaser.Scene {
       Phaser.GameObjects.RetroFont.Parse(this, config)
     );
 
+    this.back = this.add
+      .bitmapText(250, 50, 'knighthawks', 'RETURN TO MENU')
+      .setScale(0.9)
+      .setOrigin(0.5, 0.5);
+
+    this.back.setInteractive({ cursor: 'pointer' });
+    this.back.on('pointerover', () => {
+      this.tweens.add({
+        targets: this.back,
+        scaleX: 1.1,
+        scaleY: 1.1,
+        ease: 'Linear',
+        duration: 1000,
+        yoyo: false,
+        repeat: 0,
+        callbackScope: this,
+      });
+    });
+
+    this.back.setInteractive({ cursor: 'pointer' });
+    this.back.on('pointerout', () => {
+      this.tweens.add({
+        targets: this.back,
+        scaleX: 1,
+        scaleY: 1,
+        ease: 'Linear',
+        duration: 1000,
+        yoyo: false,
+        repeat: 0,
+        callbackScope: this,
+      });
+    });
+
+    this.back.on('pointerdown', () => {
+      location.reload();
+    });
+
     this.schoolText = this.add
       .bitmapText(
         window.innerWidth / 2,
