@@ -126,9 +126,16 @@ export default class SceneTwo extends Phaser.Scene {
 
     this.bulletText = this.add.bitmapText(
       50,
-      80,
+      90,
       'font',
       'Bullets :' + this.settings.bullets,
+      50
+    );
+    this.livesText = this.add.bitmapText(
+      50,
+      130,
+      'font',
+      'Lives :' + this.settings.lives,
       50
     );
 
@@ -148,6 +155,8 @@ export default class SceneTwo extends Phaser.Scene {
   update() {
     this.score.setText('Score : ' + this.settings.score);
     this.bulletText.setText('Bullets : ' + this.settings.bullets);
+    this.livesText.setText('Lives : ' + this.settings.lives);
+
     if (this.settings.bullets > 10) {
       this.settings.bullets = 10;
     }
