@@ -11,10 +11,19 @@ export default class SceneTwo extends Phaser.Scene {
     super('playGame');
   }
 
+  resize() {
+    // console.log('Resized called');
+    // this.scaleSettings.textScale = window.innerWidth / 800;
+    this.cameras.resize(window.innerWidth, window.innerHeight);
+    this.background.setSize(window.innerWidth, window.innerHeight);
+  }
+
   create() {
     /**
      * Settings
      */
+
+    this.scale.on('resize', this.resize, this);
 
     this.settings = {
       smallEnemy: 1,

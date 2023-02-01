@@ -2,10 +2,9 @@
 export default {
   type: Phaser.AUTO,
   powerPreference: 'high-performance',
-  width: window.innerWidth,
-  height: window.innerHeight,
+
   backgroundColor: 0x000000,
-  parent: 'body',
+
   dom: {
     createContainer: true,
   },
@@ -17,7 +16,10 @@ export default {
   },
 
   //Creates a slow runtime
-  // scale: {
-  //   mode: Phaser.Scale.FIT,
-  // },
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    parent: 'body',
+    width: window.innerWidth,
+    height: window.innerHeight,
+  },
 };

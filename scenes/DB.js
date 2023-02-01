@@ -130,10 +130,10 @@ export default class DB extends Phaser.Scene {
       let highScoreID = filteredData[i].id;
 
       let nameText = this.add.bitmapText(
-        30,
+        40,
         window.innerHeight / 4 + 70 * i,
         'arcadeFont',
-        `${i + 1} ${highScoreName} `,
+        `${(i + 1).toString().padStart(2, ' ')} ${highScoreName} `,
         this.scaleSettings.textScale * 25
       );
 

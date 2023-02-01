@@ -3,11 +3,19 @@ export default class Menu extends Phaser.Scene {
     super('menu');
   }
 
+  resize() {
+    // console.log('Resized called');
+    this.scaleSettings.textScale = window.innerWidth / 800;
+    this.cameras.resize(window.innerWidth, window.innerHeight);
+    this.background.setSize(window.innerWidth, window.innerHeight);
+  }
+
   preload() {
     this.value = 0;
   }
 
   create() {
+    this.scale.on('resize', this.resize, this);
     this.scaleSettings = {
       textScale: window.innerWidth / 800,
     };
