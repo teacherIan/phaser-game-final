@@ -8,6 +8,12 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+    this.scaleSettings = {
+      textScale: window.innerWidth / 800,
+    };
+
+    console.log('Scale:' + this.scaleSettings.textScale);
+
     /**
      * Background
      */
@@ -102,7 +108,7 @@ export default class Menu extends Phaser.Scene {
         'knighthawks',
         'SSIS PRESENTS'
       )
-      .setScale(2.5)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.titleText = this.add
@@ -112,7 +118,7 @@ export default class Menu extends Phaser.Scene {
         'knighthawks',
         'RETRO SPACE SHOOTER'
       )
-      .setScale(2.5)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.playText = this.add
@@ -122,7 +128,7 @@ export default class Menu extends Phaser.Scene {
         'knighthawks',
         'PLAY'
       )
-      .setScale(3)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.highScoresText = this.add
@@ -132,17 +138,17 @@ export default class Menu extends Phaser.Scene {
         'knighthawks',
         'VIEW HIGH SCORES'
       )
-      .setScale(3)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.playText.setInteractive({ cursor: 'pointer' });
     this.playText.on('pointerover', () => {
       this.playTextTween = this.tweens.add({
         targets: this.playText,
-        scaleX: 3.5,
-        scaleY: 3.5,
-        ease: 'Linear',
-        duration: 1000,
+        scaleX: this.scaleSettings.textScale + 0.2,
+        scaleY: this.scaleSettings.textScale + 0.2,
+        ease: 'Sine.easeInOut',
+        duration: 2000,
         yoyo: true,
         repeat: -1,
         callbackScope: this,
@@ -154,10 +160,10 @@ export default class Menu extends Phaser.Scene {
       this.playTextTween.complete();
       this.tweens.add({
         targets: this.playText,
-        scaleX: 3,
-        scaleY: 3,
-        ease: 'Linear',
-        duration: 1000,
+        scaleX: this.scaleSettings.textScale,
+        scaleY: this.scaleSettings.textScale,
+        ease: 'Sine.easeInOut',
+        duration: 2000,
         yoyo: false,
         repeat: 0,
         callbackScope: this,
@@ -172,10 +178,10 @@ export default class Menu extends Phaser.Scene {
     this.highScoresText.on('pointerover', () => {
       this.highScoreTween = this.tweens.add({
         targets: this.highScoresText,
-        scaleX: 3.3,
-        scaleY: 3.3,
-        ease: 'Linear',
-        duration: 1000,
+        scaleX: this.scaleSettings.textScale + 0.2,
+        scaleY: this.scaleSettings.textScale + 0.2,
+        ease: 'Sine.easeInOut',
+        duration: 2000,
         yoyo: true,
         repeat: -1,
         callbackScope: this,
@@ -187,10 +193,10 @@ export default class Menu extends Phaser.Scene {
 
       this.tweens.add({
         targets: this.highScoresText,
-        scaleX: 3,
-        scaleY: 3,
-        ease: 'Linear',
-        duration: 1500,
+        scaleX: this.scaleSettings.textScale,
+        scaleY: this.scaleSettings.textScale,
+        ease: 'Sine.easeInOut',
+        duration: 2000,
         yoyo: false,
         repeat: 0,
         callbackScope: this,

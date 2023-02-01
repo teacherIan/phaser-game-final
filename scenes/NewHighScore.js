@@ -12,6 +12,10 @@ export default class NewHighScore extends Phaser.Scene {
   }
 
   create() {
+    this.scaleSettings = {
+      textScale: window.innerWidth / 700,
+    };
+
     this.inputted = false;
     this.userInputText = '';
 
@@ -36,7 +40,7 @@ export default class NewHighScore extends Phaser.Scene {
         'knighthawks',
         'NEW HIGH SCORE:'
       )
-      .setScale(2.5)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.userScoreText = this.add
@@ -46,7 +50,7 @@ export default class NewHighScore extends Phaser.Scene {
         'knighthawks',
         this.newScore
       )
-      .setScale(3)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.userInput = this.add
@@ -56,8 +60,18 @@ export default class NewHighScore extends Phaser.Scene {
         'knighthawks',
         'TYPE NAME'
       )
-      .setScale(2.5)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
+
+    this.blink = this.tweens.add({
+      targets: this.userInput,
+      alpha: 0,
+      ease: 'Sine.easeInOut',
+      duration: 2000,
+      yoyo: true,
+      repeat: -1,
+      callbackScope: this,
+    });
 
     this.submit = this.add
       .bitmapText(
@@ -66,15 +80,15 @@ export default class NewHighScore extends Phaser.Scene {
         'knighthawks',
         'SUBMIT'
       )
-      .setScale(2.5)
+      .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
 
     this.submit.setInteractive({ cursor: 'pointer' });
     this.submit.on('pointerover', () => {
       this.hover = this.tweens.add({
         targets: this.submit,
-        scaleX: 2.7,
-        scaleY: 2.7,
+        scaleX: this.scaleSettings.textScale + 0.3,
+        scaleY: this.scaleSettings.textScale + 0.3,
         ease: 'Linear',
         duration: 1000,
         yoyo: true,
@@ -87,8 +101,8 @@ export default class NewHighScore extends Phaser.Scene {
       this.tweens.remove(this.hover);
       this.tweens.add({
         targets: this.submit,
-        scaleX: 2.5,
-        scaleY: 2.5,
+        scaleX: this.scaleSettings.textScale,
+        scaleY: this.scaleSettings.textScale,
         ease: 'Linear',
         duration: 1000,
         yoyo: false,

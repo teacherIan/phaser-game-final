@@ -5,7 +5,7 @@ import config from './config/config.js';
 //Always import any new scenes you create
 import LoadingScene from './scenes/LoadingScene.js';
 import SceneTwo from './scenes/SceneTwo.js';
-import SceneThree from './scenes/SceneThree.js';
+
 import Menu from './scenes/Menu';
 import DB from './scenes/DB';
 import NewHighScore from './scenes/NewHighScore';
@@ -16,7 +16,7 @@ class Game extends Phaser.Game {
     super(config);
     this.scene.add('loadGame', LoadingScene);
     this.scene.add('playGame', SceneTwo);
-    this.scene.add('sceneThree', SceneThree);
+
     this.scene.add('highScores', DB);
     this.scene.add('menu', Menu);
     this.scene.add('newHighScore', NewHighScore);

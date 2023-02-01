@@ -15,7 +15,9 @@ export default {
       // debug: true,
     },
   },
-  scale: {
-    mode: Phaser.Scale.FIT,
-  },
+
+  //Creates a slow runtime
+  // scale: {
+  //   mode: Phaser.Scale.FIT,
+  // },
 };
