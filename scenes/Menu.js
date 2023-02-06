@@ -15,6 +15,9 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+    console.log(window.innerWidth + 'Inner Width');
+    console.log(window.innerHeight + 'Inner Height');
+
     this.scale.on('resize', this.resize, this);
     this.scaleSettings = {
       textScale: window.innerWidth / 800,

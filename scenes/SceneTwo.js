@@ -29,7 +29,7 @@ export default class SceneTwo extends Phaser.Scene {
       smallEnemy: 1,
       mediumEnemy: 1,
       largeEnemy: 1,
-      playerSpeed: 200,
+      playerSpeed: 220,
       currentDirection: 'forward',
       score: 0,
       canShoot: true,
@@ -181,6 +181,14 @@ export default class SceneTwo extends Phaser.Scene {
      */
 
     for (let i = 0; i < this.enemyGroup.getChildren().length; i++) {
+      console.log(this.enemyGroup.getChildren()[i].getData('bonus'));
+
+      this.enemyGroup
+        .getChildren()
+        [i].setData(
+          'bonus',
+          this.enemyGroup.getChildren()[i].getData('bonus') - 1
+        );
       this.enemyFire(this.enemyGroup.getChildren()[i]);
       if (this.enemyGroup.getChildren()[i].name == 'shipLarge') {
         this.enemyDiagonalFire(this.enemyGroup.getChildren()[i]);
@@ -324,7 +332,7 @@ export default class SceneTwo extends Phaser.Scene {
 
   playerDamaged() {
     if (this.player.alpha == 1) {
-      console.log(this.settings.lives);
+      // console.log(this.settings.lives);
       this.settings.lives -= 1;
 
       if (this.settings.lives == 0) {
@@ -393,16 +401,16 @@ export default class SceneTwo extends Phaser.Scene {
   }
 
   gameOver() {
-    console.log('Game over');
+    // console.log('Game over');
     this.scene.start('newHighScore', { score: this.settings.score });
   }
 
   enemyHit(projectile, enemy) {
-    console.log(this.settings.totalEnemies);
+    // console.log(this.settings.totalEnemies);
     this.settings.totalEnemies -= 1;
 
     if (this.settings.totalEnemies == 0) {
-      console.log('next Level');
+      // console.log('next Level');
       this.addEnemies();
     }
 
@@ -421,6 +429,9 @@ export default class SceneTwo extends Phaser.Scene {
     }
 
     this.settings.score += 10;
+    if (enemy.getData('bonus') > 0) {
+      this.settings.score += enemy.getData('bonus');
+    }
 
     /**
      * Update enemy lives
@@ -480,7 +491,8 @@ export default class SceneTwo extends Phaser.Scene {
         .setScale(3)
         .play('enemySmallAnimation')
         .setName('shipSmall')
-        .setData('lives', 3);
+        .setData('lives', 3)
+        .setData('bonus', 1000);
 
       this.enemyGroup.add(smallEnemy);
     }
@@ -491,7 +503,8 @@ export default class SceneTwo extends Phaser.Scene {
         .setScale(3)
         .play('enemyMediumAnimation')
         .setName('shipMedium')
-        .setData('lives', 3);
+        .setData('lives', 3)
+        .setData('bonus', 1000);
 
       this.enemyGroup.add(mediumEnemy);
     }
@@ -502,7 +515,8 @@ export default class SceneTwo extends Phaser.Scene {
         .setScale(3)
         .play('enemyLargeAnimation')
         .setName('shipLarge')
-        .setData('lives', 3);
+        .setData('lives', 3)
+        .setData('bonus', 1000);
 
       this.enemyGroup.add(largeEnemy);
     }
