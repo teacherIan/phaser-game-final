@@ -15,25 +15,56 @@
     <div class="options show">
 
         <div class="selectCollectionHeader">
-            Select DB Collection
+            Data Collection
         </div>
         <br />
         <div class="selectInform">
-            Please use an informative collection name like 'sapphire_primary_2023'
+            'Event Name' and 'House' can both be used to query data from the database
+        </div>
+        <div class="selectInform">
+            Selections will be stored as cookies until changed
         </div>
 
-
-        <input type="text" name="" id="input">
-        <button class="selectCollectionButton" id="selectCollectionButton">Update Collection</button>
-
-        <div class="selectInform collectionName">
-            <!-- Current collection is default -->
-
+        <div class="selectInform">
+            Important: <br /> Not updated until 'Submit' has been clicked
         </div>
 
+        <br />
+
+        <div class="selectInform">
+            House:
+        </div>
+
+        <form id="form">
+
+            <label for="house">Ruby</label>
+            <input type="radio" name="house" id="" value="Ruby">
+            <label for="house">Amber</label>
+            <input type="radio" name="house" id="" value="Amber">
+
+            <label for="house">Pearl</label>
+            <input type="radio" name="house" id="" value="Pearl">
+            <label for="house">Sapphire</label>
+            <input type="radio" name="house" id="" value="Sapphire">
+
+            <br />
+
+
+            <div class="selectInform">
+                Event Name:
+            </div>
+
+            <input type="text" name="event" id="input">
+            <button type="submit" class="selectCollectionButton" id="selectCollectionButton">Submit</button>
+        </form>
+
+        <div class="selectInform houseName">
+            House: None
+        </div>
+        <div class="selectInform eventName">
+            Event Name: None
+        </div>
     </div>
-
-
 
     <script src="./main.js" type="module"></script>
 </body>

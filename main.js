@@ -1,11 +1,8 @@
 import './style.css';
 import * as Phaser from 'phaser';
 import config from './config/config.js';
-
-//Always import any new scenes you create
 import LoadingScene from './scenes/LoadingScene.js';
 import SceneTwo from './scenes/SceneTwo.js';
-
 import Menu from './scenes/Menu';
 import DB from './scenes/DB';
 import NewHighScore from './scenes/NewHighScore';
@@ -30,16 +27,29 @@ window.onload = function () {
   window.game = new Game(config);
 };
 
-//options
+/**
+ * Handle Options Tab
+ */
 
-if (localStorage.getItem('bd')) {
-  console.log('Is null');
-  localStorage.setItem('db', 'default');
+//set options to default values if not set
+
+let houseCheck = localStorage.getItem('house');
+let eventCheck = localStorage.getItem('event');
+
+if (houseCheck === null) {
+  localStorage.setItem('house', 'None');
+  houseCheck = localStorage.getItem('house');
+}
+
+if (eventCheck === null) {
+  localStorage.setItem('event', 'None');
+  eventCheck = localStorage.getItem('event');
 }
 
 const optionsSlider = document.querySelector('.options');
 const showOptionsButton = document.querySelector('.showOptionsButton');
 
+//toggle options view on button click
 let showOptions = true;
 
 function optionsHandler() {
@@ -54,35 +64,35 @@ function optionsHandler() {
     showOptionsButton.innerHTML = 'Hide Options';
   }
 }
-
 showOptionsButton.addEventListener('click', optionsHandler);
 
-const collectionInput = document.getElementById('input');
-let input = '';
+//handle form submission
 
-function inputHandler(e) {
-  input = e.target.value;
-}
+const form = document.getElementById('form');
+const houseName = document.querySelector('.houseName');
+const eventName = document.querySelector('.eventName');
 
-collectionInput.addEventListener('input', inputHandler);
+houseName.innerHTML = 'House: ' + houseCheck;
+eventName.innerHTML = 'Event Name: ' + eventCheck;
 
-const selectCollectionButton = document.getElementById(
-  'selectCollectionButton'
-);
+function handleFormSubmit(e) {
+  e.preventDefault();
 
-const collectionName = document.querySelector('.collectionName');
-collectionName.innerHTML =
-  'Current collection is: ' + localStorage.getItem('db');
+  const data = new FormData(form);
 
-function updateCollectionHandler() {
-  console.log('From update collection');
-  if (input == '') {
-    alert('enter a collection name');
-  } else {
-    localStorage.setItem('db', input);
-    collectionName.innerHTML =
-      'Current collection is: ' + localStorage.getItem('db');
+  const house = data.get('house');
+  const event = data.get('event');
+
+  if (house == null || event == '') {
+    console.log('Data incorrect');
+    alert('Must fill in both house and event name');
+    return;
   }
+  localStorage.setItem('house', house);
+  localStorage.setItem('event', event);
+
+  houseName.innerHTML = 'House: ' + house;
+  eventName.innerHTML = 'Event Name: ' + event;
 }
 
-selectCollectionButton.addEventListener('click', updateCollectionHandler);
+form.addEventListener('submit', handleFormSubmit);

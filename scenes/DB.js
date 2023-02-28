@@ -19,7 +19,7 @@ export default class DB extends Phaser.Scene {
       textScale: window.innerWidth / 800,
     };
 
-    this.getData(localStorage.getItem('db'));
+    this.getData('competition');
 
     this.databaseData = [];
 
@@ -92,6 +92,8 @@ export default class DB extends Phaser.Scene {
         name: data.name,
         score: data.highScore,
         id: doc.id,
+        house: localStorage.getItem('house'),
+        event: localStorage.getItem('event'),
       });
     });
 
@@ -100,13 +102,10 @@ export default class DB extends Phaser.Scene {
 
   async addData() {
     try {
-      const docRef = await addDoc(
-        collection(firebaseDB, localStorage.getItem('db')),
-        {
-          name: 'New Test',
-          highScore: this.newScore,
-        }
-      );
+      const docRef = await addDoc(collection(firebaseDB, 'competition'), {
+        name: 'New Test',
+        highScore: this.newScore,
+      });
       console.log('Document written with ID: ', docRef.id);
     } catch (e) {
       console.error('Error adding document: ', e);
