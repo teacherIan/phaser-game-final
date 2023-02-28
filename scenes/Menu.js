@@ -181,7 +181,12 @@ export default class Menu extends Phaser.Scene {
       });
     });
 
+    const button = document.querySelector('.showOptionsButton');
+    const options = document.querySelector('.options');
+
     this.playText.on('pointerdown', () => {
+      button.style.opacity = 0;
+      options.style.opacity = 0;
       this.scene.start('playGame');
     });
 

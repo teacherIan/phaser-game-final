@@ -179,10 +179,13 @@ export default class NewHighScore extends Phaser.Scene {
   async addData() {
     this.submit.destroy();
     try {
-      const docRef = await addDoc(collection(firebaseDB, 'high_scores'), {
-        name: this.userInput.text,
-        highScore: this.newScore,
-      });
+      const docRef = await addDoc(
+        collection(firebaseDB, localStorage.getItem('db')),
+        {
+          name: this.userInput.text,
+          highScore: this.newScore,
+        }
+      );
       this.scene.start('highScores', { id: docRef.id });
     } catch (e) {
       console.error('Error adding document: ', e);

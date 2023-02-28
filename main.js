@@ -29,3 +29,60 @@ class Game extends Phaser.Game {
 window.onload = function () {
   window.game = new Game(config);
 };
+
+//options
+
+if (localStorage.getItem('bd')) {
+  console.log('Is null');
+  localStorage.setItem('db', 'default');
+}
+
+const optionsSlider = document.querySelector('.options');
+const showOptionsButton = document.querySelector('.showOptionsButton');
+
+let showOptions = true;
+
+function optionsHandler() {
+  showOptions = !showOptions;
+
+  if (showOptions) {
+    optionsSlider.classList.add('show');
+    showOptionsButton.innerHTML = 'Show Options';
+  } else {
+    optionsSlider.classList.remove('show');
+
+    showOptionsButton.innerHTML = 'Hide Options';
+  }
+}
+
+showOptionsButton.addEventListener('click', optionsHandler);
+
+const collectionInput = document.getElementById('input');
+let input = '';
+
+function inputHandler(e) {
+  input = e.target.value;
+}
+
+collectionInput.addEventListener('input', inputHandler);
+
+const selectCollectionButton = document.getElementById(
+  'selectCollectionButton'
+);
+
+const collectionName = document.querySelector('.collectionName');
+collectionName.innerHTML =
+  'Current collection is: ' + localStorage.getItem('db');
+
+function updateCollectionHandler() {
+  console.log('From update collection');
+  if (input == '') {
+    alert('enter a collection name');
+  } else {
+    localStorage.setItem('db', input);
+    collectionName.innerHTML =
+      'Current collection is: ' + localStorage.getItem('db');
+  }
+}
+
+selectCollectionButton.addEventListener('click', updateCollectionHandler);
