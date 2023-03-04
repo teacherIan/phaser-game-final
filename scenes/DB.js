@@ -88,13 +88,18 @@ export default class DB extends Phaser.Scene {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
 
-      this.databaseData.push({
-        name: data.name,
-        score: data.highScore,
-        id: doc.id,
-        house: localStorage.getItem('house'),
-        event: localStorage.getItem('event'),
-      });
+      if (
+        localStorage.getItem('house') === doc.data().house ||
+        localStorage.getItem('event') === doc.data().event
+      ) {
+        this.databaseData.push({
+          name: data.name,
+          score: data.highScore,
+          id: doc.id,
+          house: localStorage.getItem('house'),
+          event: localStorage.getItem('event'),
+        });
+      }
     });
 
     this.updatesScores();
