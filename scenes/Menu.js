@@ -117,7 +117,7 @@ export default class Menu extends Phaser.Scene {
         window.innerWidth / 2,
         window.innerHeight / 2 - 350,
         'knighthawks',
-        'SSIS PRESENTS'
+        'HIS DESIGN TEAM PRESENTS'
       )
       .setScale(this.scaleSettings.textScale)
       .setOrigin(0.5, 0.5);
